@@ -1,0 +1,5 @@
+[submodule "secure-settings"]
+	path = secure-settings
+	url = https://github.com/boongbangsaurus/boongbang-settings.git
+	branch = release
+

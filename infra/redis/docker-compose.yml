@@ -1,0 +1,44 @@
+version: '3.8'
+
+services:
+  redis:
+    container_name: redis
+    hostname: redis
+    image: kimdahui/redis
+    build:
+      context: no-key
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    networks:
+      - jenkins-project_socon-net
+    volumes:
+      - redis-data:/data
+    user: root
+    command: redis-server /usr/local/etc/redis/redis.conf --requirepass ${REDIS_PASSWORD}
+    ports:
+      - "6379:6379"
+
+  redis-key:
+    container_name: redis-key
+    hostname: redis-key
+    image: kimdahui/redis-key
+    build:
+      context: with-key
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    networks:
+      - jenkins-project_socon-net
+    volumes:
+      - redis-key-data:/data
+    user: root
+    command: redis-server /usr/local/etc/redis/redis.conf --requirepass ${REDIS_KEY_PASSWORD}
+    ports:
+      - "6389:6389"
+
+networks:
+  jenkins-project_socon-net:
+    external: true
+
+volumes:
+  redis-data:
+  redis-key-data:

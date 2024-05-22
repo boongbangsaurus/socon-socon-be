@@ -1,0 +1,34 @@
+version: '3.7'
+services:
+  elasticsearch:
+    container_name: elasticsearch
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - "discovery.type=single-node"
+      - "xpack.security.enabled=false"
+      - "node.name=single-node"
+    ports:
+      - 9200:9200
+      - 9300:9300
+    networks:
+      - jenkins-project_socon-net
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana:8.13.0
+    container_name: kibana
+    environment:
+      SERVER_NAME: kibana
+      ELASTICSEARCH_HOSTS: http://elasticsearch:9200
+    ports:
+      - 5601:5601
+    # Elasticsearch Start Dependency
+    depends_on:
+      - elasticsearch
+    networks:
+      - jenkins-project_socon-net
+
+networks:
+  jenkins-project_socon-net:
+    external: true

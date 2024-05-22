@@ -1,0 +1,23 @@
+version: '3.3'
+
+services:
+  jenkins:
+      container_name: jenkins
+      image: kimdahui/jenkins
+      build:
+        context: .
+        dockerfile: Dockerfile
+      restart: always
+      volumes:
+        - /var/run/docker.sock:/var/run/docker.sock
+        - jenkins:/var/jenkins_home
+      ports:
+        - "8080:8080"
+      networks:
+        - socon-net
+
+networks:
+  socon-net:
+
+volumes:
+  jenkins:

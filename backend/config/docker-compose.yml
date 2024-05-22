@@ -1,0 +1,24 @@
+version: '3.3'
+
+services:
+  config:
+    container_name: config
+    image: kimdahui/config
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - "9000:9000"
+    environment:
+      - CONFIG_PASSWORD=${CONFIG_PASSWORD}
+      - CONFIG_USERNAME=${CONFIG_USERNAME}
+      - GIT_USERNAME=${GIT_USERNAME}
+      - GIT_PASSWORD=${GIT_PASSWORD}
+    networks:
+      - jenkins-project_socon-net
+
+networks:
+  jenkins-project_socon-net:
+    external: true
+

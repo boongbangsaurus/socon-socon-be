@@ -1,0 +1,1 @@
+version: '3.3'services:  nexus:    container_name: nexus    image: sonatype/nexus3    restart: always#    볼륨 매핑은 젠킨스 워크스페이스 기준    volumes:      - nexus:/sonatype-work    ports:      - "8081:8081"    networks:      - jenkins-project_socon-netvolumes:  nexus:networks:  jenkins-project_socon-net:    external: true

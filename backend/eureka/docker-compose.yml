@@ -1,0 +1,22 @@
+version: '3.3'
+
+services:
+  eureka:
+    container_name: eureka
+    image: kimdahui/eureka
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    ports:
+      - "8761:8761"
+    environment:
+      - CONFIG_PASSWORD=${CONFIG_PASSWORD}
+      - CONFIG_USERNAME=${CONFIG_USERNAME}
+    networks:
+      - jenkins-project_socon-net
+
+networks:
+  jenkins-project_socon-net:
+    external: true
+
